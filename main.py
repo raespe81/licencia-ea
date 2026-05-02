@@ -3,7 +3,7 @@ from fastapi import FastAPI
 app = FastAPI()
 
 # Lista de cuentas de MT5 permitidas
-CUENTAS_VIP = ["1234567", "34221750"]
+CUENTAS_VIP = ["1234567", "34221750", "19904047"]
 
 @app.get("/validar")
 def validar(cuenta: str):
