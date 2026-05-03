@@ -1,20 +1,31 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from datetime import datetime
 
 app = FastAPI()
 
-# Modelo para recibir los datos que envía MetaTrader
 class LicenseRequest(BaseModel):
     mt5AccountId: str
     product: str
 
-# Lista de cuentas permitidas
-CUENTAS_VIP = ["1234567", "34221750", 19904047]
+# Configura tus cuentas y sus fechas de vencimiento aquí
+CUENTAS_EXPIRACION = {
+    "1234567": "2026-12-31",
+    "34221750": "2027-05-03",
+    "19904047": "2027-05-03"
+}
 
 @app.post("/api/validate")
 async def validar(request: LicenseRequest):
-    if request.mt5AccountId in CUENTAS_VIP:
-        # Devolvemos "ACTIVE" para que el código MQL5 lo reconozca
-        return {"status": "ACTIVE", "message": "Acceso concedido"}
+    cuenta = request.mt5AccountId
     
+    if cuenta in CUENTAS_EXPIRACION:
+        fecha_exp = datetime.strptime(CUENTAS_EXPIRACION[cuenta], "%YYYY-%mm-%dd")
+        
+        # Comparamos la fecha actual con la de expiración
+        if datetime.now() <= fecha_exp:
+            return {"status": "ACTIVE", "message": f"Válido hasta {CUENTAS_EXPIRACION[cuenta]}"}
+        else:
+            return {"status": "EXPIRED", "message": "Tu licencia ha caducado"}
+            
     return {"status": "DENIED", "message": "Cuenta no autorizada"}
