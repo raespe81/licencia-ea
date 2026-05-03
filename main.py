@@ -20,7 +20,7 @@ async def validar(request: LicenseRequest):
     cuenta = request.mt5AccountId
     
     if cuenta in CUENTAS_EXPIRACION:
-        fecha_exp = datetime.strptime(CUENTAS_EXPIRACION[cuenta], "%YYYY-%mm-%dd")
+        fecha_exp = datetime.strptime(CUENTAS_EXPIRACION[cuenta], "%Y-%m-%d")
         
         # Comparamos la fecha actual con la de expiración
         if datetime.now() <= fecha_exp:
