@@ -9,7 +9,7 @@ class LicenseRequest(BaseModel):
     product: str
 
 # Lista de cuentas permitidas
-CUENTAS_VIP = ["1234567", "34221750", "19904047"]
+CUENTAS_VIP = ["1234567", "34221750"]
 
 @app.post("/api/validate")
 async def validar(request: LicenseRequest):
