@@ -12,7 +12,7 @@ class LicenseRequest(BaseModel):
 CUENTAS_EXPIRACION = {
     "1234567": "2026-12-31",
     "34221750": "2027-05-03",
-    "19904047": "2027-05-03"
+    "19904047": "2026-05-02"
 }
 
 @app.post("/api/validate")
