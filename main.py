@@ -22,7 +22,7 @@ async def validar(request: LicenseRequest):
         fecha_exp = datetime.strptime(CUENTAS_EXPIRACION[cuenta], "%Y-%m-%d")
         
         # Comparamos la fecha actual con la de expiración
-        if datetime.now() <= fecha_exp:
+        if datetime.now().date() <= fecha_exp.date():
             return {"status": "ACTIVE", "message": f"Válido hasta {CUENTAS_EXPIRACION[cuenta]}"}
         else:
             return {"status": "EXPIRED", "message": "Tu licencia ha caducado"}
